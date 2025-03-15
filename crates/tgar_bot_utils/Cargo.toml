@@ -1,0 +1,14 @@
+[package]
+name = "tgar_bot_utils"
+
+authors.workspace = true
+version.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+description.workspace = true
+
+[dependencies]
+rbxcloud.workspace = true
+once_cell.workspace = true
+twilight-http.workspace = true
+twilight-model.workspace = true

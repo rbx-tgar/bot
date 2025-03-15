@@ -1,0 +1,44 @@
+[workspace]
+members = ["crates/*"]
+resolver = "2"
+
+[workspace.package]
+authors = ["Liam Dvorscak <liam.dvorscak1@gmail.com>"]
+edition = "2024"
+version = "0.1.0"
+rust-version = "1.86.0"
+description = "TGAR game integration"
+
+[workspace.dependencies]
+rbxcloud = "0.15.1"
+once_cell = "1.21.1"
+twilight-http = { git = "https://github.com/twilight-rs/twilight.git", rev = "8aae98e5" }
+twilight-gateway = { git = "https://github.com/twilight-rs/twilight.git", rev = "8aae98e5" }
+twilight-model = { git = "https://github.com/twilight-rs/twilight.git", rev = "8aae98e5" }
+twilight-cache-inmemory = { git = "https://github.com/twilight-rs/twilight.git", rev = "8aae98e5" }
+twilight-util = { git = "https://github.com/twilight-rs/twilight.git", rev = "8aae98e5" }
+tokio = { version = "1.44.1", features = ["full"] }
+tracing = "0.1.41"
+tracing-subscriber = "0.3.19"
+thiserror = "2.0.12"
+
+[profile.dev]
+lto = false
+debug = true
+rpath = false
+panic = "unwind"
+opt-level = 0
+incremental = true
+codegen-units = 256
+overflow-checks = true
+debug-assertions = true
+
+[profile.release]
+lto = true
+strip = true
+panic = "abort"
+opt-level = 3
+incremental = false
+codegen-units = 1
+debug-assertions = false
+
