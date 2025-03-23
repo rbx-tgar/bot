@@ -8,20 +8,22 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    env:
+      DISCORD_APP_ID: ${{ secrets.DISCORD_APP_ID }}
+      DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+      ROBLOX_UNIVERSE_ID: ${{ secrets.ROBLOX_UNIVERSE_ID }}
+      ROBLOX_API_KEY: ${{ secrets.ROBLOX_API_KEY }}
+      ROBLOSECURITY: ${{ secrets.ROBLOSECURITY }}
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      CARGO_REGISTRIES_SCULK_INDEX: "sparse+https://crates.sculk.dev/api/v1/crates/"
+      CARGO_REGISTRIES_SCULK_TOKEN: "AMpB4uOEhIwJPZvogziaizOBgaS7trW1"
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
       - name: Build
-        env:
-          DISCORD_APP_ID: ${{ secrets.DISCORD_APP_ID }}
-          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
-          ROBLOX_UNIVERSE_ID: ${{ secrets.ROBLOX_UNIVERSE_ID }}
-          ROBLOX_API_KEY: ${{ secrets.ROBLOX_API_KEY }}
-          ROBLOSECURITY: ${{ secrets.ROBLOSECURITY }}
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          CARGO_REGISTRIES_SCULK_INDEX: "sparse+https://crates.sculk.dev/api/v1/crates/"
-          CARGO_REGISTRIES_SCULK_TOKEN: "AMpB4uOEhIwJPZvogziaizOBgaS7trW1"
         run: |
           cargo build --release
+          sudo systemctl stop bot.service
           cp target/release/tgar_bot /opt/bot/tgar_bot
-          sudo systemctl restart bot.service
+          sudo systemctl start bot.service
