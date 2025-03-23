@@ -22,7 +22,7 @@ pub async fn create_server() -> std::io::Result<()> {
             .service(remove_xp)
             .service(webhook)
     })
-    .bind("127.0.0.1:5750")?
+    .bind("0.0.0.0:5750")?
     .run()
     .await
 }
