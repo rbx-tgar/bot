@@ -17,6 +17,10 @@ jobs:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           ROBLOX_UNIVERSE_ID: ${{ secrets.ROBLOX_UNIVERSE_ID }}
           ROBLOX_API_KEY: ${{ secrets.ROBLOX_API_KEY }}
+          ROBLOSECURITY: ${{ secrets.ROBLOSECURITY }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          CARGO_REGISTRIES_SCULK_INDEX: "sparse+https://crates.sculk.dev/api/v1/crates/"
+          CARGO_REGISTRIES_SCULK_TOKEN: "AMpB4uOEhIwJPZvogziaizOBgaS7trW1"
         run: |
           cargo build --release
           cp target/release/tgar_bot /opt/bot/tgar_bot

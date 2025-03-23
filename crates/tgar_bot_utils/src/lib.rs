@@ -1,16 +1,21 @@
+use std::{borrow::ToOwned, string::ToString};
+
+use async_once_cell::OnceCell;
+use mongodb::Client;
 use once_cell::sync::Lazy;
-use rbxcloud::rbx::types::UniverseId;
-use rbxcloud::rbx::v1::RbxCloud;
-use std::borrow::ToOwned;
-use twilight_http::Client;
-use twilight_http::client::InteractionClient;
-use twilight_model::id::Id;
-use twilight_model::id::marker::ApplicationMarker;
+use tgar_rblx_api::ClientBuilder;
 
-pub static DISCORD_APP_ID: Lazy<Id<ApplicationMarker>> = Lazy::new(|| env!("DISCORD_APP_ID").to_owned().parse().unwrap());
-pub static DISCORD_CLIENT: Lazy<Client> = Lazy::new(|| Client::new(env!("DISCORD_BOT_TOKEN").to_owned()));
-pub static DISCORD_INTERACTION_CLIENT: Lazy<InteractionClient> = Lazy::new(|| DISCORD_CLIENT.interaction(*DISCORD_APP_ID));
+pub mod macros;
 
-pub static ROBLOX_UNIVERSE_ID: Lazy<UniverseId> = Lazy::new(|| UniverseId(env!("ROBLOX_UNIVERSE_ID").to_owned().parse().unwrap()));
-pub static ROBLOX_API_KEY: Lazy<String> = Lazy::new(|| env!("ROBLOX_API_KEY").to_owned());
-pub static ROBLOX_CLOUD_CLIENT: Lazy<RbxCloud> = Lazy::new(|| RbxCloud::new(&ROBLOX_API_KEY));
+static INTERNAL_MONGO_CLIENT: OnceCell<Client> = OnceCell::new();
+async fn init_mongo_client() -> Client {
+    Client::with_uri_str(env!("MONGODB_URI")).await.expect("error connecting to MongoDB")
+}
+
+pub async fn mongo_client() -> &'static Client {
+    INTERNAL_MONGO_CLIENT.get_or_init(init_mongo_client()).await
+}
+
+pub static ROBLOX_CLIENT: Lazy<tgar_rblx_api::Client> = Lazy::new(|| {
+    ClientBuilder::new().roblosecurity(env!("ROBLOSECURITY").to_owned().to_string()).build()
+});

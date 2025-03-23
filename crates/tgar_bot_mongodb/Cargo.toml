@@ -1,5 +1,5 @@
 [package]
-name = "tgar_bot_utils"
+name = "tgar_bot_mongodb"
 
 authors.workspace = true
 version.workspace = true
@@ -8,8 +8,7 @@ edition.workspace = true
 description.workspace = true
 
 [dependencies]
-async-once-cell.workspace = true
 mongodb.workspace = true
-once_cell.workspace = true
 serde.workspace = true
 tgar-rblx-api.workspace = true
+tgar_bot_utils.path = "../tgar_bot_utils"
