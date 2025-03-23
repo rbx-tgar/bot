@@ -1,7 +1,12 @@
+use poise::{Framework, FrameworkOptions, builtins::register_globally};
 use serenity::{Client, gateway::ActivityData, prelude::GatewayIntents};
 use tgar_bot_http::create_server;
 use tracing::{Level, error, info};
 use tracing_subscriber::FmtSubscriber;
+
+use crate::commands::{Data, xp::xp};
+
+mod commands;
 
 struct EventHandler;
 
@@ -15,14 +20,22 @@ async fn main() {
 
     info!("starting tgar bot v{}", env!("CARGO_PKG_VERSION"));
 
-    let mut client = Client::builder(
-        env!("DISCORD_BOT_TOKEN").to_owned().parse().unwrap(),
-        GatewayIntents::all(),
-    )
-    .event_handler(EventHandler)
-    .activity(ActivityData::custom("Watching over Coruscant"))
-    .await
-    .expect("failed to create client");
+    let poise = Framework::builder()
+        .options(FrameworkOptions { commands: vec![xp()], ..Default::default() })
+        .setup(|ctx, _, framework| {
+            Box::pin(async move {
+                register_globally(ctx, &framework.options().commands).await?;
+                Ok(Data)
+            })
+        })
+        .build();
+
+    let mut client = Client::builder(env!("DISCORD_BOT_TOKEN"), GatewayIntents::all())
+        .framework(poise)
+        .event_handler(EventHandler)
+        .activity(ActivityData::custom("Watching over Coruscant"))
+        .await
+        .expect("failed to create client");
 
     tokio::spawn(async move {
         if let Err(e) = client.start().await {
