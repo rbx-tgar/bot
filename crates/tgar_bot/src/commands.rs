@@ -86,6 +86,7 @@ pub mod xp {
         #[description = "The usernames of the people you wish to add xp to"] users: String,
         #[description = "The amount of XP you want to add"] amount: u64,
     ) -> Result<(), Error> {
+        ctx.defer().await?;
         let user_names: Vec<String> = users.split(',').map(|s| s.trim().to_string()).collect();
         for id in collect_user_ids(&user_names).await {
             tgar_bot_mongodb::add_xp(mongo_client().await, id as i64, amount as i64).await?;
@@ -102,6 +103,7 @@ pub mod xp {
         #[description = "The usernames of the people you wish to take xp from"] users: String,
         #[description = "The amount of XP you want to remove"] amount: u64,
     ) -> Result<(), Error> {
+        ctx.defer().await?;
         let user_names: Vec<String> = users.split(',').map(|s| s.trim().to_string()).collect();
         for id in collect_user_ids(&user_names).await {
             tgar_bot_mongodb::remove_xp(mongo_client().await, id as i64, amount as i64).await?;
@@ -118,6 +120,7 @@ pub mod xp {
         #[description = "The usernames of the people you wish to set the XP of"] users: String,
         #[description = "The amount of XP you want them to have"] amount: u64,
     ) -> Result<(), Error> {
+        ctx.defer().await?;
         let user_names: Vec<String> = users.split(',').map(|s| s.trim().to_string()).collect();
         for id in collect_user_ids(&user_names).await {
             tgar_bot_mongodb::set_xp(mongo_client().await, id as i64, amount as i64).await?;
