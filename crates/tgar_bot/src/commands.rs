@@ -6,11 +6,11 @@ pub struct Data;
 pub type Error = Box<dyn std::error::Error + Send + Sync>;
 pub type Context<'a> = poise::Context<'a, Data, Error>;
 
-const SERVER_ID: u64 = 800934264531058690;
+const SERVER_ID: u64 = 1358212386225389580;
 const TESTING_SERVER_ID: u64 = 1289087483396489227;
 
-const SHADOW_MODERATOR: u64 = 1346564691215781979;
-const OFFICER: u64 = 1300289170580963348;
+const SHADOW_MODERATOR: u64 = 1358257792472973352;
+const OFFICER: u64 = 1358253872212087005;
 
 async fn check_guild_permissions(ctx: Context<'_>) -> Result<bool, Error> {
     let guild_id = match ctx.guild_id() {
