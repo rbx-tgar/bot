@@ -8,18 +8,18 @@ pub struct Rank {
     pub required_xp: i16,
 }
 
-const GROUP: u64 = 9326891;
+const GROUP: u64 = 5518579;
 const RANKS: [Rank; 10] = [
-    Rank { role_id: 56440143, id: 10, required_xp: 0 },
-    Rank { role_id: 56445169, id: 20, required_xp: 2 },
-    Rank { role_id: 56445177, id: 30, required_xp: 5 },
-    Rank { role_id: 56445194, id: 40, required_xp: 10 },
-    Rank { role_id: 56445584, id: 50, required_xp: 18 },
-    Rank { role_id: 56445598, id: 60, required_xp: 30 },
-    Rank { role_id: 56445669, id: 70, required_xp: 50 },
-    Rank { role_id: 56445687, id: 80, required_xp: 80 },
-    Rank { role_id: 91973787, id: 81, required_xp: 120 },
-    Rank { role_id: 89630317, id: 90, required_xp: 200 },
+    Rank { role_id: 36470323, id: 1, required_xp: 0 },
+    Rank { role_id: 85638035, id: 2, required_xp: 2 },
+    Rank { role_id: 85638051, id: 3, required_xp: 5 },
+    Rank { role_id: 85638075, id: 4, required_xp: 10 },
+    Rank { role_id: 85638076, id: 5, required_xp: 18 },
+    Rank { role_id: 85638096, id: 6, required_xp: 30 },
+    Rank { role_id: 36470372, id: 7, required_xp: 50 },
+    Rank { role_id: 36470376, id: 8, required_xp: 80 },
+    Rank { role_id: 36470381, id: 9, required_xp: 120 },
+    Rank { role_id: 36470409, id: 10, required_xp: 200 },
 ];
 
 fn get_xp_rank(xp: i16) -> Option<&'static Rank> {
